@@ -16,16 +16,16 @@ from model import ResNet18
 from model_i import ResNet18 as ResNet18_i # for ImageNet dataset
 
 CUDA = torch.cuda.is_available()
-#SOURCE_CLASS = int(sys.argv[1])
-#TARGET_CLASS = int(sys.argv[2])
-SOURCE_CLASS = 0
-TARGET_CLASS = 1
-POISON_NUM = int(sys.argv[1])
+SOURCE_CLASS = int(sys.argv[1])
+TARGET_CLASS = int(sys.argv[2])
+# SOURCE_CLASS = 0
+# TARGET_CLASS = 1
+POISON_NUM = int(sys.argv[3])
 CRAFT_ITERS = 250
 RETRAIN_ITERS = 50
 TRAIN_EPOCHS = 40
 EPS = 16. / 255
-DATASET = 'TinyImageNet' # 'CIFAR10' or 'GTSRB' or 'TinyImageNet' or 'ImageNet'
+DATASET = str(sys.argv[4]) # 'CIFAR10' or 'GTSRB' or 'TinyImageNet' or 'ImageNet'
 PATCH_SIZE = 8
 IMAGE_SIZE = 64
 CLASS_NUM = 50
