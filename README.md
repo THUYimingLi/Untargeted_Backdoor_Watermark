@@ -6,9 +6,14 @@ The codes for reproducing our main experiments will be released soon.
 
 
 ### For UBW-C
-Run train.py
+-- model structure files:
+
+model_i.py for ImageNet; 
+model.py for other datasets.
+
+-- run scripts
 ```
-python train.py CIFAR-10 
+python UBW-C.py $SOURCE_CLASS$ $TARGET_CLASS$ $POISON_NUM$ $DATASET$ 
 ```
 
 ## Reference
