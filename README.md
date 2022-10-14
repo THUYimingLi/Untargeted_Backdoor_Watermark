@@ -4,6 +4,13 @@ This is the official implementation of our paper '[Untargeted Backdoor Watermark
 
 The codes for reproducing our main experiments will be released soon.
 
+
+### For UBW-C
+Run train.py
+```
+python train.py CIFAR-10 
+```
+
 ## Reference
 ```
 @inproceedings{li2022untargeted,
