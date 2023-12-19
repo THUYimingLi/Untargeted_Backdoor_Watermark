@@ -17,6 +17,9 @@ model.py for other datasets.
 python UBW-C.py $SOURCE_CLASS$ $TARGET_CLASS$ $POISON_NUM$ $DATASET$ 
 ```
 
+### For Ownership Verification
+Please refer to [DVBW](https://github.com/THUYimingLi/DVBW) for more details about how to implement a t-test (but you need to slightly change something due to the diffiences of two hypothesis tests).
+
 ## Reference
 ```
 @inproceedings{li2022untargeted,
