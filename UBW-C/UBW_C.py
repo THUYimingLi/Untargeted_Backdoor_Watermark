@@ -535,7 +535,7 @@ for t in range(1, CRAFT_ITERS + 1):
             model = ResNet18_i(1000).to(device)
             model.load_state_dict(torch.load(ckpt_dir_))
             num_ftrs = model.fc.in_features
-            model.fc = nn.Linear(num_ftrs, CLASS_NUM
+            model.fc = nn.Linear(num_ftrs, CLASS_NUM)
             model = model.to(device)
         train_model(model, temp_poison_trainset, testset, source_testset, full_patch_testset)
         source_grad, source_grad_norm = get_gradient(model, torch.utils.data.DataLoader(source_trainset, batch_size=128,
