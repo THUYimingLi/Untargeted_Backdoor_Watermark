@@ -305,10 +305,17 @@ def get_passenger_loss(poison_grad, target_grad, target_gnorm):
 def get_gradient(model, train_loader, criterion):
     """Compute the gradient of criterion(model) w.r.t to given data."""
     model.eval()
+    eps= 1e-12
     for batch_idx, (images, labels) in enumerate(train_loader):
         images = images.to(device)
         labels = labels.to(device)
-        loss = -criterion(model(images), labels)
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        outputs = F.softmax(outputs, dim=1)
+        D_loss = outputs * (outputs + eps).log()
+        D_loss = -BETA * D_loss.sum(1)          #  entrophy term
+        loss += D_loss.sum() / len(labels)
+        loss = -loss                            # for gradient ascending
         if batch_idx == 0:
             gradients = torch.autograd.grad(loss, model.parameters(), only_inputs=True)
         else:
@@ -385,7 +392,6 @@ def train_model(model, trainset, testset, poison_sourceset, poison_testset, init
     for epoch in range(1, epochs + 1, 1):
         train_correct = 0
         train_loss = 0
-        eps = 1e-12
         model.train()
         for img, y in trainloader:
             with torch.no_grad():
@@ -393,10 +399,6 @@ def train_model(model, trainset, testset, poison_sourceset, poison_testset, init
             opt.zero_grad()
             outputs = model(img)
             loss = F.cross_entropy(outputs, y)
-            output = F.softmax(outputs, dim=1)
-            D_loss = output * (output + eps).log()
-            D_loss = -BETA * D_loss.sum(1)
-            loss += D_loss.sum() / len(y)
             loss.backward()
             opt.step()
             train_loss += loss.item() * len(y)
